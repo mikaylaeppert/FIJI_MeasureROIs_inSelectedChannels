@@ -1,0 +1,26 @@
+// MeasureROIs_inSelectedChannels
+// This ImageJ macro will run the "measure" command on Fiji on all ROIs in the ROI manager.
+// Before running macro, set measurements to Area and Mean gray value and open ROI manager and
+// then add ROIs to manager: Draw ROI around Lac focus (t) - move ROI to nuclear background (t)
+
+//Image dimensions
+getDimensions(width, height, channels, slices, frames);
+
+//Number of ROIs
+nRois = roiManager("count");
+
+//Measure 2 channels for each ROI
+for (i = 0; i < nRois; i++) {
+    roiManager("select", i);
+    
+    // Measure 2st channel
+    Stack.setChannel(1);
+    run("Measure");
+    
+    // Measure 2rd channel
+    Stack.setChannel(2);
+    run("Measure");
+}
+
+//Show results
+updateResults();
